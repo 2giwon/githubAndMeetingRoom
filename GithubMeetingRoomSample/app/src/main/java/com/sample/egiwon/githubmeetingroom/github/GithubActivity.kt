@@ -8,7 +8,6 @@ import com.sample.egiwon.githubmeetingroom.databinding.ActivityGithubBinding
 
 class GithubActivity : BaseActivity<ActivityGithubBinding>(R.layout.activity_github) {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewPager()
@@ -17,12 +16,15 @@ class GithubActivity : BaseActivity<ActivityGithubBinding>(R.layout.activity_git
     private fun initViewPager() {
         binding.run {
             vpSearch.run {
-                adapter = fragmentManager?.let { PagerAdapter(it) }
+                adapter = PagerAdapter(supportFragmentManager)
                 addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tlSearch))
             }
 
             with(tlSearch) {
-                Tab.values().forEach { addTab(newTab().setText(it.stringResId)) }
+                listOf(R.string.tab_search, R.string.tab_like).forEach {
+                    addTab(newTab().setText(getString(it)))
+                }
+
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                     override fun onTabSelected(tab: TabLayout.Tab?) {
                         tab?.run { vpSearch.currentItem = position }
