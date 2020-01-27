@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.sample.egiwon.githubmeetingroom.github.search.SearchUserViewModel" />
 
     </data>
 
@@ -11,6 +19,65 @@
         android:layout_height="match_parent"
         tools:context=".github.search.">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput_search_user"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/textInput_hint_insert_user_id"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toStartOf="@id/iv_search"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:text="@={vm.searchQuery}"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@null"
+            android:onClick="@{() -> vm.searchUserInfo()}"
+            android:scaleType="center"
+            android:src="@drawable/ic_search_24dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            app:layout_constraintBottom_toBottomOf="@id/textinput_search_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toEndOf="@id/textinput_search_user"
+            app:layout_constraintTop_toTopOf="@id/textinput_search_user" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_result_users"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textinput_search_user"
+            bind:replaceItems="@{vm.searchUserResultList}"
+            tools:listitem="@layout/item_github_user" />
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            style="@style/ProgressBar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:visibility="@{vm.isShowLoadingProgressBar ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

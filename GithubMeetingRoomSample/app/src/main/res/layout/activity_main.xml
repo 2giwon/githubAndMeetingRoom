@@ -14,27 +14,27 @@
         tools:context=".MainActivity">
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_github"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"
-            android:background="@color/colorAccent"
             android:onClick="showGithubActivity"
             android:text="@string/button_move_github"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:layout_constraintBottom_toTopOf="@id/btn_ui"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="1" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_ui"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"
-            android:background="@color/colorAccent"
             android:onClick="showMeetingRoomActivity"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="@string/button_move_ui"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

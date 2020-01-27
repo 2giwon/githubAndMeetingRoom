@@ -1,17 +1,20 @@
 package com.sample.egiwon.githubmeetingroom.github
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.sample.egiwon.githubmeetingroom.ext.TabTitleProvider
 import com.sample.egiwon.githubmeetingroom.github.like.UserLikeFragment
 import com.sample.egiwon.githubmeetingroom.github.search.SearchUserFragment
 
-class PagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class PagerAdapter(fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity), TabTitleProvider {
 
     private val fragments = listOf(SearchUserFragment(), UserLikeFragment())
 
-    override fun getItem(position: Int): Fragment = fragments[position]
+    override fun getItemCount(): Int = fragments.size
 
-    override fun getCount(): Int = fragments.size
+    override fun createFragment(position: Int): Fragment = fragments[position]
+
+    override fun getItemTitle(position: Int): CharSequence = fragments[position].title
 }

@@ -9,6 +9,8 @@ import com.sample.egiwon.githubmeetingroom.databinding.FgGithubUserLikeBinding
 class UserLikeFragment : BaseFragment<FgGithubUserLikeBinding, UserLikeViewModel>(
     R.layout.fg_github_user_like
 ) {
+    override val title: String = "LIKE"
+
     @Suppress("UNCHECKED_CAST")
     override val viewModel: UserLikeViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
