@@ -1,4 +1,4 @@
-package com.sample.egiwon.githubmeetingroom.github.search
+package com.sample.egiwon.githubmeetingroom.github.like
 
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -6,24 +6,26 @@ import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseRecyclerView
 import com.sample.egiwon.githubmeetingroom.data.User
 import com.sample.egiwon.githubmeetingroom.databinding.ItemGithubUserBinding
+import com.sample.egiwon.githubmeetingroom.github.search.SearchUserViewModel
 
-class SearchUserAdapter(
+class UserLikeAdapter(
     private val viewModel: SearchUserViewModel,
     @LayoutRes private val layoutResId: Int = R.layout.item_github_user
-) : BaseRecyclerView.Adapter<SearchUserAdapter.SearchUserViewHolder, ItemGithubUserBinding>(
+) : BaseRecyclerView.Adapter<UserLikeAdapter.UserLikeViewHolder, ItemGithubUserBinding>(
     layoutResId
 ) {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseRecyclerView.BaseViewHolder<ItemGithubUserBinding> = SearchUserViewHolder(parent)
+    ): BaseRecyclerView.BaseViewHolder<ItemGithubUserBinding> = UserLikeViewHolder(parent)
 
-    inner class SearchUserViewHolder(
+    inner class UserLikeViewHolder(
         parent: ViewGroup
     ) : BaseRecyclerView.BaseViewHolder<ItemGithubUserBinding>(
-        parent, layoutResId
+        parent,
+        layoutResId
     ) {
-
         init {
             binding.vm = viewModel
         }
@@ -33,5 +35,6 @@ class SearchUserAdapter(
                 binding.user = it
             }
         }
+
     }
 }

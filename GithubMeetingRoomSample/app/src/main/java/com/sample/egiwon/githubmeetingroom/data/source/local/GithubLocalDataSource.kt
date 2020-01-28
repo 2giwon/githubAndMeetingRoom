@@ -1,15 +1,13 @@
-package com.sample.egiwon.githubmeetingroom.data.source
+package com.sample.egiwon.githubmeetingroom.data.source.local
 
 import com.sample.egiwon.githubmeetingroom.data.User
 import io.reactivex.Completable
 import io.reactivex.Single
 
-interface GithubRepository {
-    fun searchUserInfo(query: String, page: Int): Single<List<User>>
+interface GithubLocalDataSource {
+    fun getLikeUsers(): Single<List<User>>
 
     fun setLikeUser(user: User): Completable
 
     fun removeLikeUser(user: User): Completable
-
-    fun getLikeUser(): Single<List<User>>
 }

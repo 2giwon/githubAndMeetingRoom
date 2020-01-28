@@ -1,22 +1,51 @@
 package com.sample.egiwon.githubmeetingroom.github.like
 
+import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseFragment
+import com.sample.egiwon.githubmeetingroom.data.source.GithubRepositoryImpl
+import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSourceImpl
+import com.sample.egiwon.githubmeetingroom.data.source.local.db.GithubDataBase
+import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSourceImpl
 import com.sample.egiwon.githubmeetingroom.databinding.FgGithubUserLikeBinding
+import com.sample.egiwon.githubmeetingroom.github.search.SearchUserViewModel
 
-class UserLikeFragment : BaseFragment<FgGithubUserLikeBinding, UserLikeViewModel>(
+class UserLikeFragment : BaseFragment<FgGithubUserLikeBinding, SearchUserViewModel>(
     R.layout.fg_github_user_like
 ) {
     override val title: String = "LIKE"
 
     @Suppress("UNCHECKED_CAST")
-    override val viewModel: UserLikeViewModel by lazy {
+    override val viewModel: SearchUserViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-                UserLikeViewModel() as T
-        }).get(UserLikeViewModel::class.java)
+                SearchUserViewModel(
+                    GithubRepositoryImpl.getInstance(
+                        GithubRemoteDataSourceImpl.getInstance(),
+                        GithubLocalDataSourceImpl.getInstance(
+                            GithubDataBase.getInstance(requireContext()).githubUserDao()
+                        )
+                    )
+                ) as T
+        }).get(SearchUserViewModel::class.java)
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        bind {
+            vm = viewModel
+            rvUserLike.adapter = UserLikeAdapter(viewModel)
+            rvUserLike.setHasFixedSize(true)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getLikeUser()
+    }
 }

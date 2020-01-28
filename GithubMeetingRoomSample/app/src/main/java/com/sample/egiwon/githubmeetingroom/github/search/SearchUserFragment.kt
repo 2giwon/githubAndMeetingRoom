@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseFragment
 import com.sample.egiwon.githubmeetingroom.data.source.GithubRepositoryImpl
+import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSourceImpl
+import com.sample.egiwon.githubmeetingroom.data.source.local.db.GithubDataBase
 import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSourceImpl
 import com.sample.egiwon.githubmeetingroom.databinding.FgSearchGithubUserBinding
 
@@ -21,7 +23,10 @@ class SearchUserFragment : BaseFragment<FgSearchGithubUserBinding, SearchUserVie
             override fun <T : ViewModel?> create(modelClass: Class<T>): T =
                 SearchUserViewModel(
                     GithubRepositoryImpl.getInstance(
-                        GithubRemoteDataSourceImpl.getInstance()
+                        GithubRemoteDataSourceImpl.getInstance(),
+                        GithubLocalDataSourceImpl.getInstance(
+                            GithubDataBase.getInstance(requireContext()).githubUserDao()
+                        )
                     )
                 ) as T
         }).get(SearchUserViewModel::class.java)
@@ -32,7 +37,7 @@ class SearchUserFragment : BaseFragment<FgSearchGithubUserBinding, SearchUserVie
 
         bind {
             vm = viewModel
-            rvSearchResultUsers.adapter = SearchUserAdapter()
+            rvSearchResultUsers.adapter = SearchUserAdapter(viewModel)
             rvSearchResultUsers.setHasFixedSize(true)
         }
     }
