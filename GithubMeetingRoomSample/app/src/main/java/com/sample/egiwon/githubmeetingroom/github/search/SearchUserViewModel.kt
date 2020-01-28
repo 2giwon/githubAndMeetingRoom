@@ -19,12 +19,25 @@ class SearchUserViewModel(
 
     private val _isShowLoadingProgressBar = MutableLiveData<Boolean>()
     val isShowLoadingProgressBar: LiveData<Boolean> get() = _isShowLoadingProgressBar
-//    private val lastSearchQuery = MutableLiveData<>
-////
-////    private var lastSearchPage: LiveData<Int> = Transformations.switchMap(lastSearchQuery) {
-////        if (searchQuery != lastSearchQuery)
-////    }
 
+    private val _likeUsers = MutableLiveData<List<User>>()
+    val likeUsers: LiveData<List<User>> get() = _likeUsers
+
+    fun setLikeUser(user: User) {
+        githubRepository.setLikeUser(
+            User(user.id, user.avatarUrl, user.name, user.score, true)
+        ).observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+            .addDisposable()
+    }
+
+    fun getLikeUser() = githubRepository.getLikeUser()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({
+            _likeUsers.value = it
+        }, {
+            mutableErrorTextResId.value = R.string.error_like_user_load_fail
+        }).addDisposable()
 
     fun searchUserInfo() {
         if (searchQuery.value.isNullOrEmpty()) {
@@ -32,7 +45,7 @@ class SearchUserViewModel(
         } else {
             githubRepository.searchUserInfo(searchQuery.value!!, 1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess {
+                .doOnSubscribe {
                     _isShowLoadingProgressBar.value = true
                 }
                 .doAfterTerminate {

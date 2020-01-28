@@ -1,23 +1,25 @@
 package com.sample.egiwon.githubmeetingroom.data
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "Users")
+@Entity(tableName = "users")
 data class User(
 
-        @ColumnInfo(name = "avatar_url")
-        @SerializedName("avatar_url")
-        val avatarUrl: String,
+    @PrimaryKey
+    @field:SerializedName("id")
+    val id: String,
 
-        @PrimaryKey
-        @ColumnInfo(name = "name")
-        @SerializedName("login")
-        val name: String,
+    @field:SerializedName("avatar_url")
+    val avatarUrl: String,
 
-        @ColumnInfo(name = "score")
-        @SerializedName("score")
-        val score: Double
+    @field:SerializedName("login")
+    val name: String,
+
+    @field:SerializedName("score")
+    val score: Double,
+
+    @field:SerializedName("like")
+    val like: Boolean = false
 )
