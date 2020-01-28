@@ -16,15 +16,14 @@ class GithubRepositoryImpl(
 
     override fun searchUserInfo(query: String, page: Int): Single<List<User>> =
         githubRemoteDataSource.searchGithubUser(query, page)
-            .zipWith(githubLocalDataSource.getLikeUsers(), BiFunction { t1, t2 ->
-                t1.users.map { user ->
-                    t2.find {
-                        user.like = user.id == it.id
+            .zipWith(githubLocalDataSource.getLikeUsers(), BiFunction { userResponse, likeUsers ->
+                userResponse.users.map { user ->
+                    likeUsers.find {
+                        user.like = (user.id == it.id)
                         user.like
                     } ?: user
                 }
             })
-
 
     override fun setLikeUser(user: User): Completable =
         githubLocalDataSource.setLikeUser(user)
@@ -41,7 +40,10 @@ class GithubRepositoryImpl(
         fun getInstance(
             githubRemoteDataSource: GithubRemoteDataSourceImpl,
             githubLocalDataSource: GithubLocalDataSourceImpl
-        ) = instance ?: GithubRepositoryImpl(githubRemoteDataSource, githubLocalDataSource).apply {
+        ) = instance ?: GithubRepositoryImpl(
+            githubRemoteDataSource,
+            githubLocalDataSource
+        ).apply {
             instance = this
         }
     }

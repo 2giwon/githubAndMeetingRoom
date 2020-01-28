@@ -14,7 +14,11 @@
 
         <variable
             name="vm"
-            type="com.sample.egiwon.githubmeetingroom.github.search.SearchUserViewModel" />
+            type="com.sample.egiwon.githubmeetingroom.github.SearchUserViewModel" />
+
+        <variable
+            name="sharedVm"
+            type="com.sample.egiwon.githubmeetingroom.github.GithubSharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:checked="@{user.like}"
-            android:onClick="@{() -> vm.setLikeUser(user)}"
+            android:onClick="@{() -> sharedVm.setLikeUser(user)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

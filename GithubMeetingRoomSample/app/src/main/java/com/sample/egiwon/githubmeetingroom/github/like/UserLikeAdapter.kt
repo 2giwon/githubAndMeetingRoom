@@ -6,7 +6,7 @@ import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseRecyclerView
 import com.sample.egiwon.githubmeetingroom.data.User
 import com.sample.egiwon.githubmeetingroom.databinding.ItemGithubUserBinding
-import com.sample.egiwon.githubmeetingroom.github.search.SearchUserViewModel
+import com.sample.egiwon.githubmeetingroom.github.SearchUserViewModel
 
 class UserLikeAdapter(
     private val viewModel: SearchUserViewModel,
@@ -14,7 +14,6 @@ class UserLikeAdapter(
 ) : BaseRecyclerView.Adapter<UserLikeAdapter.UserLikeViewHolder, ItemGithubUserBinding>(
     layoutResId
 ) {
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

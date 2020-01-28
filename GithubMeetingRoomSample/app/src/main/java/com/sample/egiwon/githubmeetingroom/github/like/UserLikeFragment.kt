@@ -11,7 +11,8 @@ import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSour
 import com.sample.egiwon.githubmeetingroom.data.source.local.db.GithubDataBase
 import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSourceImpl
 import com.sample.egiwon.githubmeetingroom.databinding.FgGithubUserLikeBinding
-import com.sample.egiwon.githubmeetingroom.github.search.SearchUserViewModel
+import com.sample.egiwon.githubmeetingroom.github.GithubSharedViewModel
+import com.sample.egiwon.githubmeetingroom.github.SearchUserViewModel
 
 class UserLikeFragment : BaseFragment<FgGithubUserLikeBinding, SearchUserViewModel>(
     R.layout.fg_github_user_like
@@ -26,20 +27,36 @@ class UserLikeFragment : BaseFragment<FgGithubUserLikeBinding, SearchUserViewMod
                     GithubRepositoryImpl.getInstance(
                         GithubRemoteDataSourceImpl.getInstance(),
                         GithubLocalDataSourceImpl.getInstance(
-                            GithubDataBase.getInstance(requireContext()).githubUserDao()
+                            GithubDataBase.getInstance(requireContext().applicationContext)
+                                .githubUserDao()
                         )
                     )
                 ) as T
         }).get(SearchUserViewModel::class.java)
     }
 
+    @Suppress("UNCHECKED_CAST")
+    private val sharedViewModel: GithubSharedViewModel by lazy {
+        ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+                GithubSharedViewModel(
+                    GithubRepositoryImpl.getInstance(
+                        GithubRemoteDataSourceImpl.getInstance(),
+                        GithubLocalDataSourceImpl.getInstance(
+                            GithubDataBase.getInstance(requireContext().applicationContext)
+                                .githubUserDao()
+                        )
+                    )
+                ) as T
+        }).get(GithubSharedViewModel::class.java)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         bind {
-            vm = viewModel
-            rvUserLike.adapter = UserLikeAdapter(viewModel)
+            sharedVm = sharedViewModel
+            rvUserLike.adapter = UserLikeAdapter(viewModel, sharedViewModel)
             rvUserLike.setHasFixedSize(true)
         }
     }

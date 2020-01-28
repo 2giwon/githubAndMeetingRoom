@@ -1,4 +1,4 @@
-package com.sample.egiwon.githubmeetingroom.github.search
+package com.sample.egiwon.githubmeetingroom.github
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,17 +22,6 @@ class SearchUserViewModel(
 
     private val _likeUsers = MutableLiveData<List<User>>()
     val likeUsers: LiveData<List<User>> get() = _likeUsers
-
-    fun setLikeUser(user: User) {
-        user.like = !user.like
-        if (user.like) {
-            githubRepository.setLikeUser(user)
-        } else {
-            githubRepository.removeLikeUser(user)
-        }.observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-            .addDisposable()
-    }
 
     fun getLikeUser() = githubRepository.getLikeUser()
         .observeOn(AndroidSchedulers.mainThread())
@@ -61,6 +50,5 @@ class SearchUserViewModel(
                 }).addDisposable()
         }
     }
-
 
 }
