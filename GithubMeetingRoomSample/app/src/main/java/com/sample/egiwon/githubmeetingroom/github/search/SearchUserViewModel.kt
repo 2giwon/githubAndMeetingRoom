@@ -24,9 +24,12 @@ class SearchUserViewModel(
     val likeUsers: LiveData<List<User>> get() = _likeUsers
 
     fun setLikeUser(user: User) {
-        githubRepository.setLikeUser(
-            User(user.id, user.avatarUrl, user.name, user.score, true)
-        ).observeOn(AndroidSchedulers.mainThread())
+        user.like = !user.like
+        if (user.like) {
+            githubRepository.setLikeUser(user)
+        } else {
+            githubRepository.removeLikeUser(user)
+        }.observeOn(AndroidSchedulers.mainThread())
             .subscribe()
             .addDisposable()
     }
@@ -52,7 +55,7 @@ class SearchUserViewModel(
                     _isShowLoadingProgressBar.value = false
                 }
                 .subscribe({
-                    _searchUserResultList.postValue(it.users)
+                    _searchUserResultList.postValue(it)
                 }, {
                     mutableErrorTextResId.value = R.string.error_load_fail
                 }).addDisposable()

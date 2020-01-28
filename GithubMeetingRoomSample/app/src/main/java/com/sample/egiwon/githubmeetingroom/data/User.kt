@@ -9,17 +9,17 @@ data class User(
 
     @PrimaryKey
     @field:SerializedName("id")
-    val id: String,
+    var id: String,
 
     @field:SerializedName("avatar_url")
-    val avatarUrl: String,
+    var avatarUrl: String,
 
     @field:SerializedName("login")
-    val name: String,
+    var name: String,
 
     @field:SerializedName("score")
-    val score: Double,
+    var score: Double,
 
     @field:SerializedName("like")
-    val like: Boolean = false
+    var like: Boolean = false
 )
