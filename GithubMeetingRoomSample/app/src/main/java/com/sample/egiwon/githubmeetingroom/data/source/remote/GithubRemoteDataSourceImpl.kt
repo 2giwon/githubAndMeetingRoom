@@ -1,18 +1,14 @@
 package com.sample.egiwon.githubmeetingroom.data.source.remote
 
 import com.sample.egiwon.githubmeetingroom.data.UserLikeResponse
-import com.sample.egiwon.githubmeetingroom.data.source.api.Retrofit
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class GithubRemoteDataSourceImpl : GithubRemoteDataSource {
+class GithubRemoteDataSourceImpl(
+    private val service: GithubSearchLikeService
+) : GithubRemoteDataSource {
     override fun searchGithubUser(query: String, page: Int): Single<UserLikeResponse> =
-        Retrofit.retrofit.getUserInfo(query, page)
+        service.getUserInfo(query, page)
             .subscribeOn(Schedulers.io())
 
-    companion object {
-        private var instance: GithubRemoteDataSourceImpl? = null
-
-        fun getInstance() = instance ?: GithubRemoteDataSourceImpl().apply { instance = this }
-    }
 }

@@ -12,6 +12,9 @@
             name="vm"
             type="com.sample.egiwon.githubmeetingroom.github.search.SearchUserViewModel" />
 
+        <variable
+            name="sharedVm"
+            type="com.sample.egiwon.githubmeetingroom.github.GithubSharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

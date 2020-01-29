@@ -39,9 +39,8 @@ abstract class BaseRecyclerView {
 
         override fun getItemCount(): Int = items.size
 
-        override fun onBindViewHolder(holder: BaseViewHolder<B>, position: Int) {
+        override fun onBindViewHolder(holder: BaseViewHolder<B>, position: Int) =
             holder.onBindViewHolder(items[position])
-        }
 
         protected fun getItem(position: Int): A? = items.getOrNull(position)
 

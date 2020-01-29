@@ -53,6 +53,9 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.2.3'
     implementation 'androidx.room:room-rxjava2:2.2.3'
 
+    // koin
+    implementation 'org.koin:koin-androidx-viewmodel:2.1.0-alpha-8'
+
     // test
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
