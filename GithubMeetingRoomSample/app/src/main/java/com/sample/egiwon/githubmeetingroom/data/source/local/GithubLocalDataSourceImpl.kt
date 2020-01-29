@@ -21,12 +21,4 @@ class GithubLocalDataSourceImpl(
     override fun removeLikeUser(user: User): Completable = githubUserDao.removeLikeUser(user)
         .subscribeOn(Schedulers.io())
 
-    companion object {
-        private var instance: GithubLocalDataSourceImpl? = null
-
-        fun getInstance(githubDao: GithubUserDao): GithubLocalDataSourceImpl =
-            instance ?: GithubLocalDataSourceImpl(githubDao).apply { instance = this }
-    }
-
-
 }

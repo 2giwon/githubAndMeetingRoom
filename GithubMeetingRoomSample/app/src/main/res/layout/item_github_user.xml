@@ -13,10 +13,6 @@
             type="com.sample.egiwon.githubmeetingroom.data.User" />
 
         <variable
-            name="vm"
-            type="com.sample.egiwon.githubmeetingroom.github.SearchUserViewModel" />
-
-        <variable
             name="sharedVm"
             type="com.sample.egiwon.githubmeetingroom.github.GithubSharedViewModel" />
     </data>
@@ -67,8 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:checked="@{user.like}"
-            android:onClick="@{() -> sharedVm.setLikeUser(user)}"
+            android:checked="@={user.like}"
+            android:onClick="@{() -> sharedVm.saveAndRemoveChangedLikeUser(user)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

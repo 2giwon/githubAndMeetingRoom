@@ -2,9 +2,7 @@ package com.sample.egiwon.githubmeetingroom.data.source
 
 import com.sample.egiwon.githubmeetingroom.data.User
 import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSource
-import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSourceImpl
 import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSource
-import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSourceImpl
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
@@ -34,17 +32,4 @@ class GithubRepositoryImpl(
     override fun getLikeUser(): Single<List<User>> =
         githubLocalDataSource.getLikeUsers()
 
-    companion object {
-        private var instance: GithubRepositoryImpl? = null
-
-        fun getInstance(
-            githubRemoteDataSource: GithubRemoteDataSourceImpl,
-            githubLocalDataSource: GithubLocalDataSourceImpl
-        ) = instance ?: GithubRepositoryImpl(
-            githubRemoteDataSource,
-            githubLocalDataSource
-        ).apply {
-            instance = this
-        }
-    }
 }

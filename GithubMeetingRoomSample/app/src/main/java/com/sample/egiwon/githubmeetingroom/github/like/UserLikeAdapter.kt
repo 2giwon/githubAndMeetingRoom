@@ -6,10 +6,10 @@ import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseRecyclerView
 import com.sample.egiwon.githubmeetingroom.data.User
 import com.sample.egiwon.githubmeetingroom.databinding.ItemGithubUserBinding
-import com.sample.egiwon.githubmeetingroom.github.SearchUserViewModel
+import com.sample.egiwon.githubmeetingroom.github.GithubSharedViewModel
 
 class UserLikeAdapter(
-    private val viewModel: SearchUserViewModel,
+    private val viewModel: GithubSharedViewModel,
     @LayoutRes private val layoutResId: Int = R.layout.item_github_user
 ) : BaseRecyclerView.Adapter<UserLikeAdapter.UserLikeViewHolder, ItemGithubUserBinding>(
     layoutResId
@@ -26,7 +26,7 @@ class UserLikeAdapter(
         layoutResId
     ) {
         init {
-            binding.vm = viewModel
+            binding.sharedVm = viewModel
         }
 
         override fun bindItem(item: Any?) {
