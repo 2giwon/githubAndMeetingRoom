@@ -50,7 +50,7 @@
             android:layout_height="0dp"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@null"
-            android:onClick="@{() -> vm.searchUserInfo()}"
+            android:onClick="@{() -> vm.searchUsers()}"
             android:scaleType="center"
             android:src="@drawable/ic_search_24dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Button"

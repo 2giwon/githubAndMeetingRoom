@@ -20,11 +20,15 @@ class SearchUserViewModel(
     private val _isShowLoadingProgressBar = MutableLiveData<Boolean>()
     val isShowLoadingProgressBar: LiveData<Boolean> get() = _isShowLoadingProgressBar
 
-    fun searchUserInfo() {
+    private var currentPage = 1
+    private var totalPage = 0
+
+    fun searchUsers() {
         if (searchQuery.value.isNullOrEmpty()) {
             mutableErrorTextResId.value = (R.string.error_empty_query)
         } else {
-            githubRepository.searchUserInfo(searchQuery.value!!, 1)
+            currentPage = 1
+            githubRepository.searchUserInfo(searchQuery.value!!, currentPage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
                     _isShowLoadingProgressBar.value = true
@@ -33,11 +37,38 @@ class SearchUserViewModel(
                     _isShowLoadingProgressBar.value = false
                 }
                 .subscribe({
-                    _searchUserResultList.value = it
+                    _searchUserResultList.value = it.users
+                    totalPage = it.totalCount
                 }, {
                     mutableErrorTextResId.value = R.string.error_load_fail
                 }).addDisposable()
         }
     }
 
+    private fun checkTotalPage(): Boolean =
+        if (currentPage > totalPage) {
+            currentPage = totalPage
+            true
+        } else false
+
+    fun searchMoreUsers() {
+        if (checkTotalPage()) return
+        if (isShowLoadingProgressBar.value == true) return
+
+        githubRepository.searchUserInfo(searchQuery.value!!, ++currentPage)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                _isShowLoadingProgressBar.value = true
+            }
+            .doAfterTerminate {
+                _isShowLoadingProgressBar.value = false
+            }
+            .subscribe({
+                _searchUserResultList.value = _searchUserResultList.value?.plus(it.users)
+                totalPage = it.totalCount
+            }, {
+                mutableErrorTextResId.value = R.string.error_load_fail
+            }).addDisposable()
+
+    }
 }
