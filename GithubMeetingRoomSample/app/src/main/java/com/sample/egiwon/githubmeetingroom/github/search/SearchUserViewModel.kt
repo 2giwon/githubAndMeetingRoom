@@ -22,6 +22,7 @@ class SearchUserViewModel(
 
     private var currentPage = 1
     private var totalPage = 0
+    private var totalCount = 0
 
     fun searchUsers() {
         if (searchQuery.value.isNullOrEmpty()) {
@@ -38,18 +39,20 @@ class SearchUserViewModel(
                 }
                 .subscribe({
                     _searchUserResultList.value = it.users
-                    totalPage = it.totalCount
+                    totalCount = it.totalCount
                 }, {
                     mutableErrorTextResId.value = R.string.error_load_fail
                 }).addDisposable()
         }
     }
 
-    private fun checkTotalPage(): Boolean =
-        if (currentPage > totalPage) {
+    private fun checkTotalPage(): Boolean {
+        totalPage = totalCount / ITEM_PER_PAGE + if (totalCount % ITEM_PER_PAGE > 0) 1 else 0
+        return if (currentPage >= totalPage) {
             currentPage = totalPage
             true
         } else false
+    }
 
     fun searchMoreUsers() {
         if (checkTotalPage()) return
@@ -65,10 +68,14 @@ class SearchUserViewModel(
             }
             .subscribe({
                 _searchUserResultList.value = _searchUserResultList.value?.plus(it.users)
-                totalPage = it.totalCount
+                totalCount = it.totalCount
             }, {
                 mutableErrorTextResId.value = R.string.error_load_fail
             }).addDisposable()
 
+    }
+
+    companion object {
+        private const val ITEM_PER_PAGE = 30
     }
 }
