@@ -3,6 +3,8 @@ package com.sample.egiwon.githubmeetingroom.github.search
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseFragment
 import com.sample.egiwon.githubmeetingroom.databinding.FgSearchGithubUserBinding
@@ -29,6 +31,7 @@ class SearchUserFragment : BaseFragment<FgSearchGithubUserBinding, SearchUserVie
             rvSearchResultUsers.setHasFixedSize(true)
         }
 
+        setScrollListener()
         addObserve()
     }
 
@@ -38,5 +41,25 @@ class SearchUserFragment : BaseFragment<FgSearchGithubUserBinding, SearchUserVie
                 it.onUnLikeUser(user)
             }
         })
+    }
+
+    private fun setScrollListener() {
+        with(binding.rvSearchResultUsers) {
+            val layoutManager = layoutManager as LinearLayoutManager
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) {
+                        val lastVisibleItemPos =
+                            layoutManager.findLastCompletelyVisibleItemPosition()
+
+                        if (lastVisibleItemPos + 1 == adapter?.itemCount) {
+                            viewModel.searchMoreUsers()
+                        }
+                    }
+                }
+            })
+        }
+
     }
 }

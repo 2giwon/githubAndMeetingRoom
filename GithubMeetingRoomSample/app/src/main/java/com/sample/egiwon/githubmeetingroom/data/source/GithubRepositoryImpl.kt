@@ -1,6 +1,7 @@
 package com.sample.egiwon.githubmeetingroom.data.source
 
 import com.sample.egiwon.githubmeetingroom.data.User
+import com.sample.egiwon.githubmeetingroom.data.UserLikeResponse
 import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSource
 import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSource
 import io.reactivex.Completable
@@ -12,15 +13,18 @@ class GithubRepositoryImpl(
     private val githubLocalDataSource: GithubLocalDataSource
 ) : GithubRepository {
 
-    override fun searchUserInfo(query: String, page: Int): Single<List<User>> =
+    override fun searchUserInfo(query: String, page: Int): Single<UserLikeResponse> =
         githubRemoteDataSource.searchGithubUser(query, page)
             .zipWith(githubLocalDataSource.getLikeUsers(), BiFunction { userResponse, likeUsers ->
-                userResponse.users.map { user ->
-                    likeUsers.find {
-                        user.like = (user.id == it.id)
-                        user.like
-                    } ?: user
-                }
+                UserLikeResponse(
+                    userResponse.totalCount,
+                    userResponse.users.map { user ->
+                        likeUsers.find {
+                            user.like = (user.id == it.id)
+                            user.like
+                        } ?: user
+                    }
+                )
             })
 
     override fun setLikeUser(user: User): Completable =
