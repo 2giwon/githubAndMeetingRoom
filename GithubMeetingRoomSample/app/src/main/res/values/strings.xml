@@ -9,4 +9,5 @@
     <string name="error_empty_query">검색할 유저를 입력 해 주세요.</string>
     <string name="error_load_fail">불러오기 실패</string>
     <string name="error_like_user_load_fail">좋아요 유저 불러오기 실패</string>
+    <string name="reservable_title">예약가능</string>
 </resources>
