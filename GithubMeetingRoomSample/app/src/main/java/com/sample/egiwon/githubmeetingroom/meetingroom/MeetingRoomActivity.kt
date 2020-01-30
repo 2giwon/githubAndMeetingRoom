@@ -25,6 +25,7 @@ class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoom
 
         binding {
             rvMeetingroomList.adapter = MeetingRoomAdapter()
+            rvMeetingroomList.setHasFixedSize(true)
         }
         viewModel.getMeetingRooms()
 

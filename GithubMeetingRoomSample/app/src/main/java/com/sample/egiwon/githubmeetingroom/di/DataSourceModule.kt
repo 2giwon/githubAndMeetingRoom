@@ -3,6 +3,8 @@ package com.sample.egiwon.githubmeetingroom.di
 import androidx.room.Room
 import com.sample.egiwon.githubmeetingroom.data.source.GithubMeetingRoomRepository
 import com.sample.egiwon.githubmeetingroom.data.source.GithubMeetingRoomRepositoryImpl
+import com.sample.egiwon.githubmeetingroom.data.source.local.AssetManager
+import com.sample.egiwon.githubmeetingroom.data.source.local.AssetService
 import com.sample.egiwon.githubmeetingroom.data.source.local.GithubMeetingRoomLocalDataSource
 import com.sample.egiwon.githubmeetingroom.data.source.local.GithubMeetingRoomLocalDataSourceImpl
 import com.sample.egiwon.githubmeetingroom.data.source.local.db.GithubDataBase
@@ -19,9 +21,13 @@ val dataSourceModule = module {
         ).build()
     }
 
+    single<AssetService> {
+        AssetManager(androidApplication())
+    }
+
     single { get<GithubDataBase>().githubUserDao() }
     single<GithubMeetingRoomLocalDataSource> {
-        GithubMeetingRoomLocalDataSourceImpl(get(), androidApplication())
+        GithubMeetingRoomLocalDataSourceImpl(get(), get())
     }
     single<GithubRemoteDataSource> { GithubRemoteDataSourceImpl(get()) }
     single<GithubMeetingRoomRepository> { GithubMeetingRoomRepositoryImpl(get(), get()) }

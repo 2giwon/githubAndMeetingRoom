@@ -13,7 +13,7 @@
     <string name="rb_reserved_text">내 예약</string>
     <string name="rb_meeting_text">외부미팅</string>
     <string name="rb_reservable_text">예약가능</string>
-    <string name="time_bar_nine">9</string>
+    <string name="time_bar_nine"> 9</string>
     <string name="time_bar_ten">10</string>
     <string name="time_bar_eleven">11</string>
     <string name="time_bar_twelve">12</string>
@@ -24,6 +24,7 @@
     <string name="time_bar_seventeen">17</string>
     <string name="time_bar_eighteen">18</string>
     <string name="error_load_json_file">json 파일 불러오기 실패</string>
+    <string name="current_time_text">현재시간</string>
 
 
 </resources>

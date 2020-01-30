@@ -20,9 +20,19 @@ class MeetingRoomViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 _meetingRooms.value = it
+//                createMeetingRooms(it)
             }, {
                 mutableErrorTextResId.value = R.string.error_load_json_file
             }).addDisposable()
 
+//    private fun createMeetingRooms(reservedMeetingRooms: List<MeetingRoom>) {
+//        val meetingRooms = mutableListOf<MeetingRoom>().apply {
+//            add(MeetingRoom(""))
+//        }
+//
+//    }
 
+    companion object {
+        private const val MAX_MEETING_ROOM = 6
+    }
 }

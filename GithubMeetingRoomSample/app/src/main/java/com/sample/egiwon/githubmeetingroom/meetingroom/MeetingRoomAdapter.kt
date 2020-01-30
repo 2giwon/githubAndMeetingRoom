@@ -26,8 +26,13 @@ class MeetingRoomAdapter(
 
         override fun bindItem(item: Any?) {
             (item as? MeetingRoom)?.run {
-                binding.tvMeetingroomTitle.text = name
-                binding.tvMeetingroomLocation.text = location
+                with(binding) {
+                    tvMeetingroomTitle.text = name
+                    tvMeetingroomLocation.text = location
+
+                    viewTimeBar.setReservedMeetingRoom(this@run)
+                }
+
             }
         }
     }
