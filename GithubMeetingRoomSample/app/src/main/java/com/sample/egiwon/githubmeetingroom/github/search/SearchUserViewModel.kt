@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseViewModel
 import com.sample.egiwon.githubmeetingroom.data.User
-import com.sample.egiwon.githubmeetingroom.data.source.GithubRepository
+import com.sample.egiwon.githubmeetingroom.data.source.GithubMeetingRoomRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class SearchUserViewModel(
-    private val githubRepository: GithubRepository
+    private val githubMeetingRoomRepository: GithubMeetingRoomRepository
 ) : BaseViewModel() {
 
     private val _searchUserResultList = MutableLiveData<List<User>>()
@@ -29,7 +29,7 @@ class SearchUserViewModel(
             mutableErrorTextResId.value = (R.string.error_empty_query)
         } else {
             currentPage = 1
-            githubRepository.searchUserInfo(searchQuery.value!!, currentPage)
+            githubMeetingRoomRepository.searchUserInfo(searchQuery.value!!, currentPage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
                     _isShowLoadingProgressBar.value = true
@@ -58,7 +58,7 @@ class SearchUserViewModel(
         if (checkTotalPage()) return
         if (isShowLoadingProgressBar.value == true) return
 
-        githubRepository.searchUserInfo(searchQuery.value!!, ++currentPage)
+        githubMeetingRoomRepository.searchUserInfo(searchQuery.value!!, ++currentPage)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
                 _isShowLoadingProgressBar.value = true

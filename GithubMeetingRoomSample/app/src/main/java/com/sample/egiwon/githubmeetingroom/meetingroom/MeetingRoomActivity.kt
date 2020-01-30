@@ -2,12 +2,19 @@ package com.sample.egiwon.githubmeetingroom.meetingroom
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.sample.egiwon.githubmeetingroom.R
+import com.sample.egiwon.githubmeetingroom.base.BaseActivity
+import com.sample.egiwon.githubmeetingroom.databinding.ActivityMeetingroomBinding
 import com.sample.egiwon.githubmeetingroom.ext.getCurrentDate
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDateTime
 
-class MeetingRoomActivity : AppCompatActivity(R.layout.activity_meetingroom) {
+class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoomViewModel>(
+    R.layout.activity_meetingroom
+) {
+
+    override val viewModel: MeetingRoomViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +23,14 @@ class MeetingRoomActivity : AppCompatActivity(R.layout.activity_meetingroom) {
             title = LocalDateTime.now().getCurrentDate()
         }
 
+        binding {
+            rvMeetingroomList.adapter = MeetingRoomAdapter()
+        }
+        viewModel.getMeetingRooms()
+
+        viewModel.meetingRooms.observe(this, Observer {
+            (binding.rvMeetingroomList.adapter as? MeetingRoomAdapter)?.replaceAll(it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

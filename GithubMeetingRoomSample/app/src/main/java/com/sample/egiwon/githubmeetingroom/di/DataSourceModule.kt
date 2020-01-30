@@ -1,10 +1,10 @@
 package com.sample.egiwon.githubmeetingroom.di
 
 import androidx.room.Room
-import com.sample.egiwon.githubmeetingroom.data.source.GithubRepository
-import com.sample.egiwon.githubmeetingroom.data.source.GithubRepositoryImpl
-import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSource
-import com.sample.egiwon.githubmeetingroom.data.source.local.GithubLocalDataSourceImpl
+import com.sample.egiwon.githubmeetingroom.data.source.GithubMeetingRoomRepository
+import com.sample.egiwon.githubmeetingroom.data.source.GithubMeetingRoomRepositoryImpl
+import com.sample.egiwon.githubmeetingroom.data.source.local.GithubMeetingRoomLocalDataSource
+import com.sample.egiwon.githubmeetingroom.data.source.local.GithubMeetingRoomLocalDataSourceImpl
 import com.sample.egiwon.githubmeetingroom.data.source.local.db.GithubDataBase
 import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSource
 import com.sample.egiwon.githubmeetingroom.data.source.remote.GithubRemoteDataSourceImpl
@@ -18,8 +18,11 @@ val dataSourceModule = module {
             GithubDataBase::class.java, GithubDataBase.DBNAME
         ).build()
     }
+
     single { get<GithubDataBase>().githubUserDao() }
-    single<GithubLocalDataSource> { GithubLocalDataSourceImpl(get()) }
+    single<GithubMeetingRoomLocalDataSource> {
+        GithubMeetingRoomLocalDataSourceImpl(get(), androidApplication())
+    }
     single<GithubRemoteDataSource> { GithubRemoteDataSourceImpl(get()) }
-    single<GithubRepository> { GithubRepositoryImpl(get(), get()) }
+    single<GithubMeetingRoomRepository> { GithubMeetingRoomRepositoryImpl(get(), get()) }
 }

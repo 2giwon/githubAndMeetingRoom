@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseViewModel
 import com.sample.egiwon.githubmeetingroom.data.User
-import com.sample.egiwon.githubmeetingroom.data.source.GithubRepository
+import com.sample.egiwon.githubmeetingroom.data.source.GithubMeetingRoomRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class GithubSharedViewModel(
-    private val githubRepository: GithubRepository
+    private val githubMeetingRoomRepository: GithubMeetingRoomRepository
 ) : BaseViewModel() {
 
     private val _likeUsers = MutableLiveData<List<User>>()
@@ -20,15 +20,15 @@ class GithubSharedViewModel(
 
     fun saveOrRemoveChangedLikeUser(user: User) =
         if (user.like) {
-            githubRepository.setLikeUser(user)
+            githubMeetingRoomRepository.setLikeUser(user)
         } else {
             _removedLikeUser.value = user
-            githubRepository.removeLikeUser(user)
+            githubMeetingRoomRepository.removeLikeUser(user)
         }.observeOn(AndroidSchedulers.mainThread())
             .subscribe()
             .addDisposable()
 
-    fun getLikeUser() = githubRepository.getLikeUser()
+    fun getLikeUser() = githubMeetingRoomRepository.getLikeUser()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
             _likeUsers.value = it
