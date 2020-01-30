@@ -1,32 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_available_meetingroom_title"
-        style="@style/MeetingRoomHeading1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/available_meetingroom"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_available_meetingroom_count"
-        style="@style/MeetingRoomHeadingAvailableCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tv_available_meetingroom_title"
-        app:layout_constraintTop_toTopOf="@id/tv_available_meetingroom_title" />
+    </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_available_meetingroom"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/tv_available_meetingroom_title" />
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_available_meetingroom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_available_meetingroom_title"
+                style="@style/MeetingRoomHeading1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/available_meetingroom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_available_meetingroom_count"
+                style="@style/MeetingRoomHeadingAvailableCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tv_available_meetingroom_title"
+                app:layout_constraintTop_toTopOf="@id/tv_available_meetingroom_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_available_meetingroom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tv_available_meetingroom_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_reservable"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/reservable_title"
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/rect_reservable"
+            app:layout_constraintTop_toBottomOf="@id/layout_available_meetingroom"
+            app:layout_constraintBottom_toTopOf="@id/rv_meetingroom_list"
+            tools:text="예약가능" />
+
+        <View
+            android:id="@+id/rect_reservable"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/colorVariableSelect"
+            app:layout_constraintBottom_toBottomOf="@id/tv_reservable"
+            app:layout_constraintEnd_toStartOf="@id/tv_reservable"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_reservable" />
+
+        <RadioGroup
+            android:id="@+id/rg_reserve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:checkedButton="@id/rb_reservable"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_reservable">
+
+            <RadioButton
+                android:id="@+id/rb_reservable"
+                style="@style/RadioButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/rb_reservable_text"
+                app:layout_constraintEnd_toStartOf="@id/rb_meeting"
+                app:layout_constraintTop_toTopOf="@id/rb_my_reserved" />
+
+            <RadioButton
+                android:id="@+id/rb_meeting"
+                style="@style/RadioButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/rb_meeting_text"
+                app:layout_constraintEnd_toStartOf="@id/rb_my_reserved"
+                app:layout_constraintTop_toTopOf="@id/rb_my_reserved" />
+
+            <RadioButton
+                android:id="@+id/rb_my_reserved"
+                style="@style/RadioButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="@string/rb_reserved_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_reservable"
+                tools:text="내 예약" />
+
+        </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_meetingroom_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_reserve" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

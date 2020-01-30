@@ -18,7 +18,8 @@
     </style>
 
     <style name="MeetingRoomHeading1">
-        <item name="android:layout_margin">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorTextHeading1</item>
     </style>
@@ -29,4 +30,21 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorVariableSelect</item>
     </style>
+
+    <style name="RadioButtonStyle" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/colorNormalText</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:buttonTint">@color/colorVariableSelect</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="MeetingRoomTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorTextHeading1</item>
+    </style>
+
+
 </resources>

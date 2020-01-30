@@ -9,4 +9,22 @@
     <string name="error_empty_query">검색할 유저를 입력 해 주세요.</string>
     <string name="error_load_fail">불러오기 실패</string>
     <string name="error_like_user_load_fail">좋아요 유저 불러오기 실패</string>
+    <string name="reservable_title">예약가능</string>
+    <string name="rb_reserved_text">내 예약</string>
+    <string name="rb_meeting_text">외부미팅</string>
+    <string name="rb_reservable_text">예약가능</string>
+    <string name="time_bar_nine"> 9</string>
+    <string name="time_bar_ten">10</string>
+    <string name="time_bar_eleven">11</string>
+    <string name="time_bar_twelve">12</string>
+    <string name="time_bar_thirteen">13</string>
+    <string name="time_bar_fourteen">14</string>
+    <string name="time_bar_fifteen">15</string>
+    <string name="time_bar_sixteen">16</string>
+    <string name="time_bar_seventeen">17</string>
+    <string name="time_bar_eighteen">18</string>
+    <string name="error_load_json_file">json 파일 불러오기 실패</string>
+    <string name="current_time_text">현재시간</string>
+
+
 </resources>

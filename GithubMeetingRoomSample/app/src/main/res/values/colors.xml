@@ -8,4 +8,5 @@
     <color name="colorTextHeading1">#000000</color>
 
     <color name="colorVariableSelect">#0078ff</color>
+    <color name="colorNormalText">#777777</color>
 </resources>
