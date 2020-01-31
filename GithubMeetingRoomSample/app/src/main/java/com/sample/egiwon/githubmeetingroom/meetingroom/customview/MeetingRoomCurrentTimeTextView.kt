@@ -67,9 +67,13 @@ class MeetingRoomCurrentTimeTextView @JvmOverloads constructor(
             val moveX = (timeWidth * getCurrentTimeToIndicatorTime().toBigDecimal()).toFloat()
             val textWidth = paint.measureText(text.toString())
 
-            x = if (moveX > 0 && moveX < measuredWidth) moveX - (textWidth / 2) else moveX
+            x = when {
+                moveX > 0 && moveX < measuredWidth -> moveX - (textWidth / 2)
+                moveX >= measuredWidth -> (measuredWidth - textWidth)
+                else -> moveX
+            }
 
-            currentTimeX = moveX
+            currentTimeX = if (moveX > measuredWidth) measuredWidth.toFloat() else moveX
             currentTimeIndicatorListeners.forEach { it.onCurrentTimeMoved(currentTimeX) }
 
         }

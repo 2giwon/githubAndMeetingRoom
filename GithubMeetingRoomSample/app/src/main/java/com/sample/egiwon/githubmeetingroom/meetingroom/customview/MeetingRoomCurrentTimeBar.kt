@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import kotlin.properties.Delegates
 
+
 class MeetingRoomCurrentTimeBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -21,6 +22,9 @@ class MeetingRoomCurrentTimeBar @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        x = currentTimeX
+        x = if (currentTimeX > 0) (currentTimeX - convertDpToPx(context, 1.0f)) else 0.0f
     }
+
+    private fun convertDpToPx(context: Context, dp: Float): Float =
+        dp * context.resources.displayMetrics.density
 }
