@@ -6,6 +6,7 @@ import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseRecyclerView
 import com.sample.egiwon.githubmeetingroom.data.MeetingRoom
 import com.sample.egiwon.githubmeetingroom.databinding.MeetingroomCardviewBinding
+import com.sample.egiwon.githubmeetingroom.meetingroom.customview.CurrentTimeIndicatorListener
 
 class MeetingRoomAdapter(
     @LayoutRes private val layoutResId: Int = R.layout.meetingroom_cardview
@@ -22,7 +23,7 @@ class MeetingRoomAdapter(
     ) : BaseRecyclerView.BaseViewHolder<MeetingroomCardviewBinding>(
         parent,
         layoutResId
-    ) {
+    ), CurrentTimeIndicatorListener {
 
         override fun bindItem(item: Any?) {
             (item as? MeetingRoom)?.run {
@@ -30,10 +31,17 @@ class MeetingRoomAdapter(
                     tvMeetingroomTitle.text = name
                     tvMeetingroomLocation.text = location
 
+                    tvCurrentTime.addCurrentTimeIndicatorListener(this@MeetingRoomViewHolder)
+                    tvCurrentTime.addCurrentTimeIndicatorListener(viewCurrentIndicator)
+                    tvCurrentTime.setReservedMeetingRoom(this@run)
                     viewTimeBar.setReservedMeetingRoom(this@run)
                 }
 
             }
+        }
+
+        override fun onCurrentTimeMoved(currentX: Float) {
+            binding.viewTimeBar.currentTimeX = currentX
         }
     }
 }
