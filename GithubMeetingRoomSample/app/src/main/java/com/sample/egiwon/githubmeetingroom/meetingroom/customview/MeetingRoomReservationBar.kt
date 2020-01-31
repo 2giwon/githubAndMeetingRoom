@@ -29,20 +29,20 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
 
     private fun settingReservedTimeToBar() {
         reservedMeetingRoom.reservations.forEach {
-            val convertStartTime = it.startTime
+            val convertedStartTime = it.startTime
                 .convertTimeToCount()
                 .toBigDecimal()
 
-            val convertEndTime = it.endTime
+            val convertedEndTime = it.endTime
                 .convertTimeToCount()
                 .toBigDecimal()
 
             listRect.add(
                 Rect(
-                    (timeWidth * convertStartTime).toInt(),
+                    (timeWidth * convertedStartTime).toInt(),
                     0,
-                    ((timeWidth * convertStartTime) +
-                            (timeWidth * (convertEndTime - convertStartTime))).toInt(),
+                    ((timeWidth * convertedStartTime) +
+                            (timeWidth * (convertedEndTime - convertedStartTime))).toInt(),
                     measuredHeight
                 )
             )
@@ -51,27 +51,9 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
     }
 
     private fun String.convertTimeToCount(): Float =
-        when (this) {
-            "0900" -> 0.0f
-            "0930" -> 0.45f
-            "1000" -> 1.0f
-            "1030" -> 1.45f
-            "1100" -> 2.0f
-            "1130" -> 2.45f
-            "1200" -> 3.0f
-            "1230" -> 3.45f
-            "1300" -> 4.0f
-            "1330" -> 4.45f
-            "1400" -> 5.0f
-            "1430" -> 5.45f
-            "1500" -> 6.0f
-            "1530" -> 6.45f
-            "1600" -> 7.0f
-            "1630" -> 7.45f
-            "1700" -> 8.0f
-            "1730" -> 8.45f
-            else -> measuredWidth.toFloat()
-        }
+        if (this.toInt() % 100 == 0 && this.toInt() < 1800) ((this.toInt() - 900) / 100).toFloat()
+        else if (this.toInt() >= 1800) measuredWidth.toFloat()
+        else ((this.toInt() - 930) / 100 + 0.45f)
 
     private fun drawCurrentTimeReservedBar(canvas: Canvas?) {
         val rectF = RectF(

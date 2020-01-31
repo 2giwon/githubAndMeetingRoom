@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.View
 import kotlin.properties.Delegates
 
-
 class MeetingRoomCurrentTimeBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
