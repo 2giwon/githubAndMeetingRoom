@@ -25,6 +25,16 @@
     <string name="time_bar_eighteen">18</string>
     <string name="error_load_json_file">json 파일 불러오기 실패</string>
     <string name="current_time_text">현재시간</string>
-
-
+    <string name="meetingroom1_location_text">MUSINSA 1 / B1</string>
+    <string name="meetingroom2_location_text">MUSINSA 1 / B1</string>
+    <string name="meetingroom3_location_text">MUSINSA 1 / B1</string>
+    <string name="meetingroom4_location_text">MUSINSA 1 / B1</string>
+    <string name="meetingroom5_location_text">MUSINSA 1 / 2F</string>
+    <string name="meetingroom6_location_text">MUSINSA 2 / 2F</string>
+    <string name="meetingroom1_name">대회의실1</string>
+    <string name="meetingroom2_name">회의실2</string>
+    <string name="meetingroom3_name">회의실3</string>
+    <string name="meetingroom4_name">회의실4</string>
+    <string name="meetingroom5_name">회의실5</string>
+    <string name="meetingroom6_name">회의실6</string>
 </resources>

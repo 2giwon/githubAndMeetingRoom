@@ -1,10 +1,7 @@
-package com.sample.egiwon.githubmeetingroom.meetingroom
+package com.sample.egiwon.githubmeetingroom.meetingroom.customview
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.sample.egiwon.githubmeetingroom.data.MeetingRoom
@@ -23,7 +20,8 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
 
     private val timeWidth: BigDecimal by lazy { BigDecimal(measuredWidth / 9) }
     private lateinit var reservedMeetingRoom: MeetingRoom
-    private val rects = mutableListOf<Rect>()
+    private val listRect = mutableListOf<Rect>()
+    var currentTimeX = 0.0f
 
     fun setReservedMeetingRoom(reservedMeetingRoom: MeetingRoom) {
         this.reservedMeetingRoom = reservedMeetingRoom
@@ -31,22 +29,20 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
 
     private fun settingReservedTimeToBar() {
         reservedMeetingRoom.reservations.forEach {
-            val convertStartTime = it.startTime
-                .toInt()
+            val convertedStartTime = it.startTime
                 .convertTimeToCount()
                 .toBigDecimal()
 
-            val convertEndTime = it.endTime
-                .toInt()
+            val convertedEndTime = it.endTime
                 .convertTimeToCount()
                 .toBigDecimal()
 
-            rects.add(
+            listRect.add(
                 Rect(
-                    (timeWidth * convertStartTime).toInt(),
+                    (timeWidth * convertedStartTime).toInt(),
                     0,
-                    ((timeWidth * convertStartTime) +
-                            (timeWidth * (convertEndTime - convertStartTime))).toInt(),
+                    ((timeWidth * convertedStartTime) +
+                            (timeWidth * (convertedEndTime - convertedStartTime))).toInt(),
                     measuredHeight
                 )
             )
@@ -54,36 +50,28 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
         }
     }
 
-    private fun Int.convertTimeToCount(): Float =
-        when (this) {
-            900 -> 0.0f
-            930 -> 0.5f
-            1000 -> 1.0f
-            1030 -> 1.5f
-            1100 -> 2.0f
-            1130 -> 2.5f
-            1200 -> 3.0f
-            1230 -> 3.5f
-            1300 -> 4.0f
-            1330 -> 4.5f
-            1400 -> 5.0f
-            1430 -> 5.5f
-            1500 -> 6.0f
-            1530 -> 6.5f
-            1600 -> 7.0f
-            1630 -> 7.5f
-            1700 -> 8.0f
-            1730 -> 8.5f
-            1800 -> 9.5f
-            else -> 0.0f
-        }
+    private fun String.convertTimeToCount(): Float =
+        if (this.toInt() % 100 == 0 && this.toInt() < 1800) ((this.toInt() - 900) / 100).toFloat()
+        else if (this.toInt() >= 1800) measuredWidth.toFloat()
+        else ((this.toInt() - 930) / 100 + 0.45f)
 
+    private fun drawCurrentTimeReservedBar(canvas: Canvas?) {
+        val rectF = RectF(
+            0.0f,
+            0.0f,
+            currentTimeX,
+            measuredHeight.toFloat()
+        )
+
+        canvas?.drawRect(rectF, paint)
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
+        drawCurrentTimeReservedBar(canvas)
         settingReservedTimeToBar()
-        rects.forEach {
+        listRect.forEach {
             canvas?.drawRect(it, paint)
         }
     }

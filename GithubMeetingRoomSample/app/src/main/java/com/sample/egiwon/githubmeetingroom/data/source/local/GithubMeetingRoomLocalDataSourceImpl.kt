@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 
 class GithubMeetingRoomLocalDataSourceImpl(
     private val githubUserDao: GithubUserDao,
-    private val assetService: AssetService
+    private val meetingRoomAssetService: MeetingRoomAssetService
 ) : GithubMeetingRoomLocalDataSource {
 
     override fun getLikeUsers(): Single<List<User>> =
@@ -24,7 +24,7 @@ class GithubMeetingRoomLocalDataSourceImpl(
         .subscribeOn(Schedulers.io())
 
     override fun getMeetingRoomFromFile(): Single<List<MeetingRoom>> =
-        assetService.getMeetingRooms()
+        meetingRoomAssetService.getMeetingRooms()
             .subscribeOn(Schedulers.io())
 
 

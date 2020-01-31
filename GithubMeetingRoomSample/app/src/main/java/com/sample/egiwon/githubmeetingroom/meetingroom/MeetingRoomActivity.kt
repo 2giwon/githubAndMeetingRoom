@@ -29,8 +29,16 @@ class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoom
         }
         viewModel.getMeetingRooms()
 
+        setObserve()
+    }
+
+    private fun setObserve() {
         viewModel.meetingRooms.observe(this, Observer {
             (binding.rvMeetingroomList.adapter as? MeetingRoomAdapter)?.replaceAll(it)
+        })
+
+        viewModel.reservableMeetingRoomCount.observe(this, Observer {
+            binding.tvAvailableMeetingroomCount.text = it.toString()
         })
     }
 
