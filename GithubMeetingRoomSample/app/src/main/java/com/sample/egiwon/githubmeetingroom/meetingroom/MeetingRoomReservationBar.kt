@@ -57,25 +57,24 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
     private fun Int.convertTimeToCount(): Float =
         when (this) {
             900 -> 0.0f
-            930 -> 0.5f
+            930 -> 0.45f
             1000 -> 1.0f
-            1030 -> 1.5f
+            1030 -> 1.45f
             1100 -> 2.0f
-            1130 -> 2.5f
+            1130 -> 2.45f
             1200 -> 3.0f
-            1230 -> 3.5f
+            1230 -> 3.45f
             1300 -> 4.0f
-            1330 -> 4.5f
+            1330 -> 4.45f
             1400 -> 5.0f
-            1430 -> 5.5f
+            1430 -> 5.45f
             1500 -> 6.0f
-            1530 -> 6.5f
+            1530 -> 6.45f
             1600 -> 7.0f
-            1630 -> 7.5f
+            1630 -> 7.45f
             1700 -> 8.0f
-            1730 -> 8.5f
-            1800 -> 9.5f
-            else -> 0.0f
+            1730 -> 8.45f
+            else -> measuredWidth.toFloat()
         }
 
 
