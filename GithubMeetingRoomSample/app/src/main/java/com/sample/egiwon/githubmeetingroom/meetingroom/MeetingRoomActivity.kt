@@ -24,8 +24,12 @@ class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoom
         }
 
         binding {
+            vm = viewModel
             rvMeetingroomList.adapter = MeetingRoomAdapter()
             rvMeetingroomList.setHasFixedSize(true)
+
+            rvAvailableMeetingroom.adapter = AvailableMeetingRoomAdapter()
+            rvAvailableMeetingroom.setHasFixedSize(true)
         }
 
         viewModel.getMeetingRooms()
@@ -33,12 +37,8 @@ class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoom
     }
 
     private fun addObserves() {
-        viewModel.meetingRooms.observe(this, Observer {
-            (binding.rvMeetingroomList.adapter as? MeetingRoomAdapter)?.replaceAll(it)
-        })
-
-        viewModel.reservableMeetingRoomCount.observe(this, Observer {
-            binding.tvAvailableMeetingroomCount.text = it.toString()
+        viewModel.reservableMeetingRoomCount.observe(this, Observer { availableCount ->
+            binding.tvAvailableMeetingroomCount.text = availableCount.toString()
         })
     }
 

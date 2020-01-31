@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.sample.egiwon.githubmeetingroom.meetingroom.MeetingRoomViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +50,11 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="24dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/tv_available_meetingroom_title" />
+                android:visibility="@{vm.isShowAvailableMeetingRooms ? View.VISIBLE : View.GONE}"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_available_meetingroom_title"
+                bind:replaceItems="@{vm.availableMeetingRooms}"
+                tools:listitem="@layout/item_available_meeting_room" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -130,7 +140,9 @@
             android:layout_marginTop="10dp"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rg_reserve" />
+            app:layout_constraintTop_toBottomOf="@id/rg_reserve"
+            bind:replaceItems="@{vm.meetingRooms}"
+            tools:listitem="@layout/meetingroom_cardview" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
