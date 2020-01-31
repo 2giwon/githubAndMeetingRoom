@@ -14,5 +14,5 @@ fun LocalDateTime.convertTimeToReserveTime(): String {
     val hour = format(DateTimeFormatter.ofPattern("HH"))
     val minute = if (format(DateTimeFormatter.ofPattern("mm")).toInt() >= 30) "30" else "00"
 
-    return hour + minute
+    return "0900"
 }

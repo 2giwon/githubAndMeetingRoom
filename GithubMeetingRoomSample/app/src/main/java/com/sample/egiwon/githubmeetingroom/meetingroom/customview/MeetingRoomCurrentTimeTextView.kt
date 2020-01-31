@@ -19,8 +19,7 @@ class MeetingRoomCurrentTimeTextView @JvmOverloads constructor(
 
     private lateinit var reservedMeetingRoom: MeetingRoom
     private var isSetPosition = false
-    var currentTimeX = 0.0f
-        private set
+    private var currentTimeX = 0.0f
 
     fun setReservedMeetingRoom(reservedMeetingRoom: MeetingRoom) {
         this.reservedMeetingRoom = reservedMeetingRoom

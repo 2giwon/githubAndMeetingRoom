@@ -11,13 +11,22 @@ import com.sample.egiwon.githubmeetingroom.github.GithubSharedViewModel
 class UserLikeAdapter(
     private val viewModel: GithubSharedViewModel,
     @LayoutRes private val layoutResId: Int = R.layout.item_github_user
-) : BaseRecyclerView.Adapter<UserLikeAdapter.UserLikeViewHolder, ItemGithubUserBinding>(
+) : BaseRecyclerView.Adapter<User, ItemGithubUserBinding>(
     layoutResId
 ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BaseRecyclerView.BaseViewHolder<ItemGithubUserBinding> = UserLikeViewHolder(parent)
+
+    val onRemoveUnlikeUser: (User) -> Unit = {
+        (0..itemCount).forEach { index ->
+            if (getItem(index)?.id == it.id) {
+                removeItem(index)
+            }
+        }
+        notifyDataSetChanged()
+    }
 
     inner class UserLikeViewHolder(
         parent: ViewGroup

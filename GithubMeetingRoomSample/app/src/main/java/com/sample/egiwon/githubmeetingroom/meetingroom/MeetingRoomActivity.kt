@@ -27,12 +27,12 @@ class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoom
             rvMeetingroomList.adapter = MeetingRoomAdapter()
             rvMeetingroomList.setHasFixedSize(true)
         }
-        viewModel.getMeetingRooms()
 
-        setObserve()
+        viewModel.getMeetingRooms()
+        addObserves()
     }
 
-    private fun setObserve() {
+    private fun addObserves() {
         viewModel.meetingRooms.observe(this, Observer {
             (binding.rvMeetingroomList.adapter as? MeetingRoomAdapter)?.replaceAll(it)
         })

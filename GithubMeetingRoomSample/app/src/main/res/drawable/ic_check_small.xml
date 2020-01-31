@@ -8,5 +8,5 @@
         android:fillType="evenOdd"
         android:pathData="M8,8m-7.5,0a7.5,7.5 0,1 1,15 0a7.5,7.5 0,1 1,-15 0"
         android:strokeWidth="1"
-        android:strokeColor="#0078ff" />
+        android:strokeColor="#CCC" />
 </vector>

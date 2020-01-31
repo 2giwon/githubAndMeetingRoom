@@ -36,9 +36,9 @@ class SearchUserFragment : BaseFragment<FgSearchGithubUserBinding, SearchUserVie
     }
 
     private fun addObserve() {
-        sharedViewModel.removedLikeUser.observe(viewLifecycleOwner, Observer { user ->
-            (binding.rvSearchResultUsers.adapter as? SearchUserAdapter)?.let {
-                it.onUnLikeUser(user)
+        sharedViewModel.unLikeUser.observe(viewLifecycleOwner, Observer { user ->
+            (binding.rvSearchResultUsers.adapter as? SearchUserAdapter)?.run {
+                onUnLikeUser(user)
             }
         })
     }

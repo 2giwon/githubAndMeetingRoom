@@ -44,6 +44,8 @@ abstract class BaseRecyclerView {
 
         protected fun getItem(position: Int): A? = items.getOrNull(position)
 
+        protected fun removeItem(position: Int) = items.removeAt(position)
+
         fun replaceAll(items: List<A>?) {
             this.items.run {
                 clear()
