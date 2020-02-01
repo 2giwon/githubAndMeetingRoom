@@ -30,10 +30,12 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
     private fun settingReservedTimeToBar() {
         reservedMeetingRoom.reservations.forEach {
             val convertedStartTime = it.startTime
+                .toInt()
                 .convertTimeToCount(measuredWidth)
                 .toBigDecimal()
 
             val convertedEndTime = it.endTime
+                .toInt()
                 .convertTimeToCount(measuredWidth)
                 .toBigDecimal()
 

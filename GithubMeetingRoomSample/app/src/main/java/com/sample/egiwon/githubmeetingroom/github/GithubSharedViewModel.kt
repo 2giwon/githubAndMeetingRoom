@@ -18,15 +18,15 @@ class GithubSharedViewModel(
     private val _unLikeUser = MutableLiveData<User>()
     val unLikeUser: LiveData<User> get() = _unLikeUser
 
-    private val _removableUser = MutableLiveData<User>()
-    val removableUser: LiveData<User> get() = _removableUser
+    private val _removedUser = MutableLiveData<User>()
+    val removedUser: LiveData<User> get() = _removedUser
 
     fun saveOrRemoveChangedLikeUser(user: User) =
         if (user.like) {
             githubMeetingRoomRepository.setLikeUser(user)
         } else {
             _unLikeUser.value = user
-            _removableUser.value = user
+            _removedUser.value = user
             githubMeetingRoomRepository.removeLikeUser(user)
         }.observeOn(AndroidSchedulers.mainThread())
             .subscribe()

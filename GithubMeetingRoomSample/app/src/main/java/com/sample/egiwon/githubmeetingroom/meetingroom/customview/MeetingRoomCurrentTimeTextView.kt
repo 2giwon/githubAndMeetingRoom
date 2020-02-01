@@ -7,7 +7,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.sample.egiwon.githubmeetingroom.data.MeetingRoom
 import com.sample.egiwon.githubmeetingroom.ext.convertTimeToReserveTime
 import java.math.BigDecimal
-import java.time.LocalDateTime
 
 class MeetingRoomCurrentTimeTextView @JvmOverloads constructor(
     context: Context,
@@ -32,7 +31,8 @@ class MeetingRoomCurrentTimeTextView @JvmOverloads constructor(
     }
 
     private fun getCurrentTimeToIndicatorTime(): Float =
-        LocalDateTime.now().convertTimeToReserveTime()
+        getCurrentTime().convertTimeToReserveTime()
+            .toInt()
             .convertTimeToCount(measuredWidth)
 
     override fun onDraw(canvas: Canvas?) {
@@ -50,7 +50,7 @@ class MeetingRoomCurrentTimeTextView @JvmOverloads constructor(
             }
 
             currentTimeX = if (moveX > measuredWidth) measuredWidth.toFloat() else moveX
-            currentTimeIndicatorListeners.forEach { it.onCurrentTimeMoved(currentTimeX) }
+            currentTimeIndicatorListeners.forEach { it.onCurrentTimeTextViewMoved(currentTimeX) }
 
         }
     }

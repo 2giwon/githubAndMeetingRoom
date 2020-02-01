@@ -17,7 +17,7 @@ val dataSourceModule = module {
     single {
         Room.databaseBuilder(
             androidApplication(),
-            GithubDataBase::class.java, GithubDataBase.DBNAME
+            GithubDataBase::class.java, GithubDataBase.DB_NAME
         ).build()
     }
 

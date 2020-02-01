@@ -14,7 +14,7 @@ class MeetingRoomCurrentTimeBar @JvmOverloads constructor(
 
     private var currentTimeX by Delegates.notNull<Float>()
 
-    override fun onCurrentTimeMoved(currentX: Float) {
+    override fun onCurrentTimeTextViewMoved(currentX: Float) {
         currentTimeX = currentX
     }
 
