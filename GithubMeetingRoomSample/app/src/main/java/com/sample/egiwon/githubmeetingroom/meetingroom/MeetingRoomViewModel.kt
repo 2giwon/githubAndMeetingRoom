@@ -9,8 +9,8 @@ import com.sample.egiwon.githubmeetingroom.data.MeetingRoom
 import com.sample.egiwon.githubmeetingroom.data.Reservation
 import com.sample.egiwon.githubmeetingroom.data.source.GithubMeetingRoomRepository
 import com.sample.egiwon.githubmeetingroom.ext.convertTimeToReserveTime
+import com.sample.egiwon.githubmeetingroom.meetingroom.customview.getCurrentTime
 import io.reactivex.android.schedulers.AndroidSchedulers
-import java.time.LocalDateTime
 
 class MeetingRoomViewModel(
     private val githubMeetingRoomRepository: GithubMeetingRoomRepository
@@ -40,12 +40,11 @@ class MeetingRoomViewModel(
                 mutableErrorTextResId.value = R.string.error_load_json_file
             }).addDisposable()
 
-
     private fun getAvailableMeetingRoom(meetingRooms: List<MeetingRoom>): List<MeetingRoom> {
         val availableMeetingRooms = meetingRooms.toMutableList()
         meetingRooms.forEach { meetingRoom ->
             var deadLine = DEAD_LINE
-            val currentTime = LocalDateTime.now().convertTimeToReserveTime().toInt()
+            val currentTime = getCurrentTime().convertTimeToReserveTime().toInt()
             deadLine -= currentTime
 
             meetingRoom.reservations.forEach {
@@ -53,7 +52,7 @@ class MeetingRoomViewModel(
 
                     when {
                         it.endTime.toInt() > currentTime && it.startTime.toInt() > currentTime -> {
-                            deadLine -= calculatePeriod(it)
+                            deadLine -= calculateReservationPeriod(it)
                         }
                         it.endTime.toInt() > currentTime -> {
                             deadLine -= (it.endTime.toInt() - currentTime)
@@ -75,7 +74,7 @@ class MeetingRoomViewModel(
         return availableMeetingRooms
     }
 
-    private fun calculatePeriod(reservation: Reservation): Int {
+    private fun calculateReservationPeriod(reservation: Reservation): Int {
         var period = (reservation.endTime.toInt() - reservation.startTime.toInt())
         if (period % 100 > 50) period -= 20
         else if (period % 100 > 0) period += 20

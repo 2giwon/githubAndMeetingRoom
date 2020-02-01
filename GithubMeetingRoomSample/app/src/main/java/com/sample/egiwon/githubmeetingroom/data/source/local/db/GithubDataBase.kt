@@ -13,6 +13,6 @@ abstract class GithubDataBase : RoomDatabase() {
     abstract fun githubUserDao(): GithubUserDao
 
     companion object {
-        const val DBNAME = "Users.db"
+        const val DB_NAME = "Users.db"
     }
 }

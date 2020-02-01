@@ -40,7 +40,7 @@ class MeetingRoomAdapter(
             }
         }
 
-        override fun onCurrentTimeMoved(currentX: Float) {
+        override fun onCurrentTimeTextViewMoved(currentX: Float) {
             binding.viewTimeBar.currentTimeX = currentX
         }
     }

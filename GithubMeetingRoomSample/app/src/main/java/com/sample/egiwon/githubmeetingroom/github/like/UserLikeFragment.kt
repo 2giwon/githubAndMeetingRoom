@@ -29,7 +29,7 @@ class UserLikeFragment : BaseFragment<FgGithubUserLikeBinding, GithubSharedViewM
     }
 
     private fun addObserve() {
-        viewModel.removableUser.observe(viewLifecycleOwner, Observer {
+        viewModel.removedUser.observe(viewLifecycleOwner, Observer {
             (binding.rvUserLike.adapter as? UserLikeAdapter)?.run {
                 onRemoveUnlikeUser(it)
             }

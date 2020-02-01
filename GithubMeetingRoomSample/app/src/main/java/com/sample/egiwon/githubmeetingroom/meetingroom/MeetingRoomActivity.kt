@@ -7,8 +7,8 @@ import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseActivity
 import com.sample.egiwon.githubmeetingroom.databinding.ActivityMeetingroomBinding
 import com.sample.egiwon.githubmeetingroom.ext.getCurrentDate
+import com.sample.egiwon.githubmeetingroom.meetingroom.customview.getCurrentTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.time.LocalDateTime
 
 class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoomViewModel>(
     R.layout.activity_meetingroom
@@ -20,7 +20,7 @@ class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoom
         super.onCreate(savedInstanceState)
 
         supportActionBar?.run {
-            title = LocalDateTime.now().getCurrentDate()
+            title = getCurrentTime().getCurrentDate()
         }
 
         binding {
