@@ -30,11 +30,11 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
     private fun settingReservedTimeToBar() {
         reservedMeetingRoom.reservations.forEach {
             val convertedStartTime = it.startTime
-                .convertTimeToCount()
+                .convertTimeToCount(measuredWidth)
                 .toBigDecimal()
 
             val convertedEndTime = it.endTime
-                .convertTimeToCount()
+                .convertTimeToCount(measuredWidth)
                 .toBigDecimal()
 
             listRect.add(
@@ -49,11 +49,6 @@ class MeetingRoomReservationBar @JvmOverloads constructor(
 
         }
     }
-
-    private fun String.convertTimeToCount(): Float =
-        if (this.toInt() % 100 == 0 && this.toInt() < 1800) ((this.toInt() - 900) / 100).toFloat()
-        else if (this.toInt() >= 1800) measuredWidth.toFloat()
-        else ((this.toInt() - 930) / 100 + 0.45f)
 
     private fun drawCurrentTimeReservedBar(canvas: Canvas?) {
         val rectF = RectF(

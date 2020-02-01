@@ -42,7 +42,7 @@ class MeetingRoomViewModel(
 
 
     private fun getAvailableMeetingRoom(meetingRooms: List<MeetingRoom>): List<MeetingRoom> {
-
+        val availableMeetingRooms = meetingRooms.toMutableList()
         meetingRooms.forEach { meetingRoom ->
             var deadLine = DEAD_LINE
             val currentTime = LocalDateTime.now().convertTimeToReserveTime().toInt()
@@ -63,17 +63,16 @@ class MeetingRoomViewModel(
                 }
             }
 
-            meetingRoom.available = if (deadLine > 0) {
+            if (deadLine > 0) {
                 availableMeetingRoomCount++
-                true
             } else {
-                false
+                availableMeetingRooms.remove(meetingRoom)
             }
         }
 
         _reservableMeetingRoomCount.value = availableMeetingRoomCount
         _isShowAvailableMeetingRooms.value = availableMeetingRoomCount != 0
-        return meetingRooms
+        return availableMeetingRooms
     }
 
     private fun calculatePeriod(reservation: Reservation): Int {

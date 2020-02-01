@@ -29,7 +29,7 @@ class MeetingRoomAssetManager(
     private fun createMeetingRooms(reservedMeetingRooms: List<MeetingRoom>): List<MeetingRoom> =
         getMeetingRoomTitles(applicationContext)
             .zip(getMeetingRoomLocations(applicationContext))
-            .map { MeetingRoom(it.second, it.first, true, emptyList()) }
+            .map { MeetingRoom(it.second, it.first, emptyList()) }
             .distinctSelectedLatter(reservedMeetingRooms)
 
     private fun Iterable<MeetingRoom>.distinctSelectedLatter(
@@ -40,11 +40,11 @@ class MeetingRoomAssetManager(
             var meetingRoom: MeetingRoom? = null
             other.forEach {
                 if (it.name == e.name) {
-                    meetingRoom = MeetingRoom(it.location, it.name, true, it.reservations)
+                    meetingRoom = MeetingRoom(it.location, it.name, it.reservations)
                 }
             }
 
-            list.add(index, meetingRoom ?: MeetingRoom(e.location, e.name, true, emptyList()))
+            list.add(index, meetingRoom ?: MeetingRoom(e.location, e.name, emptyList()))
         }
 
         return list

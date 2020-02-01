@@ -26,7 +26,7 @@ class AvailableMeetingRoomAdapter(
     ) {
         override fun bindItem(item: Any?) {
             (item as? MeetingRoom)?.run {
-                if (available) binding.btnMeetingRoom.text = name
+                binding.btnMeetingRoom.text = name
             }
         }
     }
