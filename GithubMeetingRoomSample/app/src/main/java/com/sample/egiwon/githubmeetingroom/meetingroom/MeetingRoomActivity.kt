@@ -24,21 +24,21 @@ class MeetingRoomActivity : BaseActivity<ActivityMeetingroomBinding, MeetingRoom
         }
 
         binding {
+            vm = viewModel
             rvMeetingroomList.adapter = MeetingRoomAdapter()
             rvMeetingroomList.setHasFixedSize(true)
-        }
-        viewModel.getMeetingRooms()
 
-        setObserve()
+            rvAvailableMeetingroom.adapter = AvailableMeetingRoomAdapter()
+            rvAvailableMeetingroom.setHasFixedSize(true)
+        }
+
+        viewModel.getMeetingRooms()
+        addObserves()
     }
 
-    private fun setObserve() {
-        viewModel.meetingRooms.observe(this, Observer {
-            (binding.rvMeetingroomList.adapter as? MeetingRoomAdapter)?.replaceAll(it)
-        })
-
-        viewModel.reservableMeetingRoomCount.observe(this, Observer {
-            binding.tvAvailableMeetingroomCount.text = it.toString()
+    private fun addObserves() {
+        viewModel.reservableMeetingRoomCount.observe(this, Observer { availableCount ->
+            binding.tvAvailableMeetingroomCount.text = availableCount.toString()
         })
     }
 

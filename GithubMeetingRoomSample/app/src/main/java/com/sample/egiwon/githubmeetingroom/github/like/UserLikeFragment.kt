@@ -2,6 +2,7 @@ package com.sample.egiwon.githubmeetingroom.github.like
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseFragment
 import com.sample.egiwon.githubmeetingroom.databinding.FgGithubUserLikeBinding
@@ -23,6 +24,16 @@ class UserLikeFragment : BaseFragment<FgGithubUserLikeBinding, GithubSharedViewM
             rvUserLike.adapter = UserLikeAdapter(viewModel)
             rvUserLike.setHasFixedSize(true)
         }
+
+        addObserve()
+    }
+
+    private fun addObserve() {
+        viewModel.removableUser.observe(viewLifecycleOwner, Observer {
+            (binding.rvUserLike.adapter as? UserLikeAdapter)?.run {
+                onRemoveUnlikeUser(it)
+            }
+        })
     }
 
     override fun onResume() {

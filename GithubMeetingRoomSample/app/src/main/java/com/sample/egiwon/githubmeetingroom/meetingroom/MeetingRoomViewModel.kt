@@ -2,6 +2,7 @@ package com.sample.egiwon.githubmeetingroom.meetingroom
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.sample.egiwon.githubmeetingroom.R
 import com.sample.egiwon.githubmeetingroom.base.BaseViewModel
 import com.sample.egiwon.githubmeetingroom.data.MeetingRoom
@@ -20,6 +21,13 @@ class MeetingRoomViewModel(
 
     private var availableMeetingRoomCount = 0
 
+    val availableMeetingRooms: LiveData<List<MeetingRoom>> = Transformations.map(meetingRooms) {
+        getAvailableMeetingRoom(it)
+    }
+
+    private val _isShowAvailableMeetingRooms = MutableLiveData<Boolean>()
+    val isShowAvailableMeetingRooms: LiveData<Boolean> get() = _isShowAvailableMeetingRooms
+
     private val _reservableMeetingRoomCount = MutableLiveData<Int>()
     val reservableMeetingRoomCount: LiveData<Int> get() = _reservableMeetingRoomCount
 
@@ -28,14 +36,13 @@ class MeetingRoomViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 _meetingRooms.value = it
-                getAvailableMeetingRoom(it)
             }, {
                 mutableErrorTextResId.value = R.string.error_load_json_file
             }).addDisposable()
 
 
-    private fun getAvailableMeetingRoom(meetingRooms: List<MeetingRoom>) {
-
+    private fun getAvailableMeetingRoom(meetingRooms: List<MeetingRoom>): List<MeetingRoom> {
+        val availableMeetingRooms = meetingRooms.toMutableList()
         meetingRooms.forEach { meetingRoom ->
             var deadLine = DEAD_LINE
             val currentTime = LocalDateTime.now().convertTimeToReserveTime().toInt()
@@ -56,15 +63,16 @@ class MeetingRoomViewModel(
                 }
             }
 
-            meetingRoom.available = if (deadLine > 0) {
+            if (deadLine > 0) {
                 availableMeetingRoomCount++
-                true
             } else {
-                false
+                availableMeetingRooms.remove(meetingRoom)
             }
         }
 
         _reservableMeetingRoomCount.value = availableMeetingRoomCount
+        _isShowAvailableMeetingRooms.value = availableMeetingRoomCount != 0
+        return availableMeetingRooms
     }
 
     private fun calculatePeriod(reservation: Reservation): Int {

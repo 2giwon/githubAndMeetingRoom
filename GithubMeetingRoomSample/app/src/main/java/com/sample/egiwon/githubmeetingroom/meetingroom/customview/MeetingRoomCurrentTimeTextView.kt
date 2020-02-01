@@ -19,8 +19,7 @@ class MeetingRoomCurrentTimeTextView @JvmOverloads constructor(
 
     private lateinit var reservedMeetingRoom: MeetingRoom
     private var isSetPosition = false
-    var currentTimeX = 0.0f
-        private set
+    private var currentTimeX = 0.0f
 
     fun setReservedMeetingRoom(reservedMeetingRoom: MeetingRoom) {
         this.reservedMeetingRoom = reservedMeetingRoom
@@ -32,14 +31,9 @@ class MeetingRoomCurrentTimeTextView @JvmOverloads constructor(
         currentTimeIndicatorListeners.add(listener)
     }
 
-    private fun String.convertTimeToCount(): Float =
-        if (this.toInt() % 100 == 0 && this.toInt() < 1800) ((this.toInt() - 900) / 100).toFloat()
-        else if (this.toInt() >= 1800) measuredWidth.toFloat()
-        else ((this.toInt() - 930) / 100 + 0.45f)
-
     private fun getCurrentTimeToIndicatorTime(): Float =
         LocalDateTime.now().convertTimeToReserveTime()
-            .convertTimeToCount()
+            .convertTimeToCount(measuredWidth)
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
